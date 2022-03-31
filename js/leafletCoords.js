@@ -1,34 +1,46 @@
 let imageObj = new Image();
-imageObj.src = '../images/teste.png';
 let pathsRoute = [];
 let markers = [];
-
+let map = null;
+let route = null;
+let imageOverlay = null;
 function getMaxBounds(){
   return L.latLngBounds(L.latLng(imageObj.height, imageObj.width), L.latLng(0,0));
 }
- 
-const map = L.map('map', {
-  crs: L.CRS.Simple,
-  maxBounds: getMaxBounds(),
-  zoom: 0,
-  minZoom: -3
-});
 
-let route = new L.polyline(pathsRoute, {
-  color: "#51CFFE",
-  weight: "1.5",
-  dashArray: "1.5, 2.5",
-  dashOffset: "0",
-}).addTo(map);
-let imageOverlay = L.imageOverlay(imageObj.src, getMaxBounds()).addTo(map);
-map.fitBounds(getMaxBounds());
+function initializeMap(){
+  map = L.map('map', {
+    crs: L.CRS.Simple,
+    maxBounds: getMaxBounds(),
+    minZoom: -3
+  });
+  map.setZoom(map.getBoundsZoom(getMaxBounds(), false));
+  
+  route = new L.polyline(pathsRoute, {
+    color: "#51CFFE",
+    weight: "1.5",
+    dashArray: "1.5, 2.5",
+    dashOffset: "0",
+  }).addTo(map);
+  imageOverlay = L.imageOverlay(imageObj.src, getMaxBounds()).addTo(map);
+  map.fitBounds(getMaxBounds());
+  map.on('click', (e)=> {
+    pathsRoute.push([e.latlng.lat, e.latlng.lng]);
+    updateMarkers();
+    updateRoute();
+    console.log(pathsRoute);
+  });
+}
 
-map.on('click', (e)=> {
-  pathsRoute.push([e.latlng.lat, e.latlng.lng]);
+function changeMap(){
+  map.setMaxBounds(getMaxBounds());
+  map.setZoom(map.getBoundsZoom(getMaxBounds(), false));
+  imageOverlay.setUrl(imageObj.src);
+  imageOverlay.setBounds(getMaxBounds());
+  pathsRoute = [];
   updateMarkers();
   updateRoute();
-  console.log(pathsRoute);
-});
+}
 
 function updateMarkers(){
   markers.map(marker => marker.remove());
@@ -89,3 +101,16 @@ function transformCoordinatesToLeaflet(coords){
 }
 
 
+const inputImage = document.getElementById('image-input');
+inputImage.addEventListener('change', (e)=>{
+  let file = e.target.files[0];
+  const reader = new FileReader();
+  imageObj.onload = (_)=>{
+    if(!map){
+      initializeMap()
+      return;
+    }
+    changeMap()
+  }
+  imageObj.src = URL.createObjectURL(file);
+})

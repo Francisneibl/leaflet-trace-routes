@@ -10,9 +10,10 @@
 </head>
 <body>
   <div id="map" style="width: 100vw; height: 100vh; cursor: default;"></div>
-  <script src="./js/FilesSaver.js"></script>
-  <script src="./js/leafletCoords.js"></script>
   <button style="position: absolute; top: 10px; left: 100px; z-index: 10000;"  onclick="exportPaths()">Exportar Rotas</button>
   <button style="position: absolute; top: 10px; left: 200px; z-index: 10000;"  onclick="copyPathsToClipBoard()">Copiar Rotas</button>
+  <input id="image-input" type="file"/>
+  <script src="./js/FilesSaver.js"></script>
+  <script src="./js/leafletCoords.js"></script>
 </body>
 </html>

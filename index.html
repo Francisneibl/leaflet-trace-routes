@@ -4,16 +4,77 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+  <link rel="stylesheet" href="./css//reset.css"/>
+  <link rel="stylesheet" href="./css/leafletCoords.css">
+  <link rel="stylesheet" href="./libs/leaflet/leaflet.css"/>
+  <script src="./libs/leaflet/leaflet.js"></script>
   <title>Leaflet Routes</title>
 </head>
 <body>
-  <div id="map" style="width: 100vw; height: 100vh; cursor: default;"></div>
-  <button style="position: absolute; top: 10px; left: 100px; z-index: 10000;"  onclick="exportPaths()">Exportar Rotas</button>
-  <button style="position: absolute; top: 10px; left: 200px; z-index: 10000;"  onclick="copyPathsToClipBoard()">Copiar Rotas</button>
-  <input id="image-input" type="file"/>
-  <script src="./js/FilesSaver.js"></script>
+  <header>
+    <nav class="nav-bar" id="nav-bar">
+      <button class="button button-config" id="button-drawer-settings"></button>
+    </nav>
+  </header>
+  <side>
+    <div class="drawer" id="drawer-settings">
+      <div class="drawer-content">
+        <div class="form-group" title='Configurações do mapa'>
+          <legend>Configurações do Mapa</legend>
+          <label for="image-map" class="form-label">Imagem</label>
+          <input type="file" name="image-map" id="image-map" class="form-control"/>
+          <div class="row mb-1">
+            <input type="color" name="polyline-color" id="polyline-color" class="form-control form-control-color"/>
+            <label for="polyline-color" class="form-label">Cor da Rota</label>
+          </div>
+          <label for="polyline-color" class="form-label">Estilo da Rota</label>
+          <div class="custom-select form-control" id="select-style">
+            <div class="select-style">
+              <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10">
+                <line x1="0" y1="5" x2="100" y2="5" stroke="black"
+                stroke-dasharray="0" />
+             </svg>
+            </div>
+          </div>
+          <div name="" class="drop-down-styles" id="drop-down-styles">
+            <div class="style-item" stroke-dasharray="0">
+              <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10">
+                <line x1="0" y1="5" x2="100" y2="5" stroke="black"
+                stroke-dasharray="0" />
+             </svg>
+            </div>
+            <div class="style-item" stroke-dasharray="4 1">
+              <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10">
+                <line x1="0" y1="5" x2="100" y2="5" stroke="black"
+                stroke-dasharray="4 1" />
+             </svg>
+            </div>
+            <div class="style-item" stroke-dasharray="4 2 4 2 8 2">
+              <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10">
+                <line x1="0" y1="5" x2="100" y2="5" stroke="black"
+                stroke-dasharray="4 2 4 2 8 2" />
+             </svg>
+            </div>
+            <div class="style-item" stroke-dasharray="1">
+              <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10">
+                <line x1="0" y1="5" x2="100" y2="5" stroke="black"
+                stroke-dasharray="1" />
+             </svg>
+            </div>
+          </div>
+          <select name="" class="form-control" id=""></select>
+          <select name="" class='form-control' id=""></select>
+        </div>
+      </div>
+    </div>
+  </side>
+  <main>
+    <div id="map" style="width: 100vw; height: 100vh; cursor: default;"></div>
+    <!-- <button style="position: absolute; top: 10px; left: 100px; z-index: 10000;"  onclick="exportPaths()">Exportar Rotas</button> -->
+    <!-- <button style="position: absolute; top: 10px; left: 200px; z-index: 10000;"  onclick="copyPathsToClipBoard()">Copiar Rotas</button> -->
+    <!-- <input id="image-input" type="file"/> -->
+  </main>
+  <script src="./libs/FilesSaver.js"></script>
   <script src="./js/leafletCoords.js"></script>
 </body>
 </html>
